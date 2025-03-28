@@ -1,18 +1,14 @@
 import telebot
 import firebase_admin
 from firebase_admin import credentials, db
-import os
 
-# ✅ Secure API Token & Firebase URL (Set in Railway Environment Variables)
-API_TOKEN = os.getenv("7835083999:AAG-cV5A6t8msRTBQyMZ7FxBBzaL-wxBoyE")
-DATABASE_URL = os.getenv("https://e-commerce-b929a.firebaseio.com/")
-
-# ✅ Initialize bot
+# ✅ Replace with your real Telegram Bot API token (DO NOT SHARE PUBLICLY)
+API_TOKEN = "7835083999:AAG-cV5A6t8msRTBQyMZ7FxBBzaL-wxBoyE"
 bot = telebot.TeleBot(API_TOKEN)
 
-# ✅ Secure Firebase credentials
+# ✅ Replace with your Firebase credentials JSON file
 cred = credentials.Certificate("firebase-credentials.json")
-firebase_admin.initialize_app(cred, {'databaseURL': DATABASE_URL})
+firebase_admin.initialize_app(cred, {'databaseURL': 'https://e-commerce-b929a.firebaseapp.com/'})
 
 # ✅ Welcome message
 @bot.message_handler(commands=['start'])
@@ -22,7 +18,7 @@ def send_welcome(message):
                           "Use /order to track your order\n"
                           "Use /register to save your details")
 
-# ✅ FAQ Auto-reply
+# ✅ Auto-reply for FAQs
 faq_responses = {
     "price": "Our pricing starts from $10. Visit www.plink21.com for details.",
     "services": "We offer Marketing, E-commerce, and IT solutions.",
@@ -65,6 +61,6 @@ def send_broadcast(message):
         for user_id in user_list.keys():
             bot.send_message(user_id, message)
 
-# ✅ Keep bot running
+# ✅ Run the bot 24/7
 print("Bot is running...")
 bot.polling()
